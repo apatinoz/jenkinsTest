@@ -1,0 +1,54 @@
+version: "3.3"
+
+services:
+  
+  backEnd:
+    networks:
+      -test
+    image: backEnd
+    build: 
+      context: ./backEnd/docker/
+      dockerfile: ./Dev.Dockerfile
+    restart: unless-stopped
+    container_name: backEnd
+    hostname: backEnd
+    entrypoint: /usr/local/bin/entrypoint.sh
+    ports:
+      - '4001:4001'
+    expose:
+      - '4001'
+    environment:
+      PORT: 4001
+      NODE_ENV: 'development'
+      APP_WORKDIR: ${BACKEND_WORKDIR}
+    volumes:
+      - ./zlp-backend:${BACKEND_WORKDIR}      
+   
+
+  frontEnd:
+    networks:
+      - test
+    image:frontEnd
+    build: 
+      context: ./frontEnd/docker/
+      dockerfile: ./Dev.Dockerfile   
+    restart: unless-stopped
+    container_name: frontEnd
+    hostname: frontEnd
+    entrypoint: /usr/local/bin/entrypoint.sh  
+    ports:
+      - '3001:3001'
+    expose:
+      - '3001'
+    volumes:
+      - ./frontEnd/webapp:${WEBAPP_WORKDIR}
+    environment:
+      BACKEND_URL: ${BACKEND_URL}
+
+
+#volumes:
+#  zlp-mongodata:
+
+networks:
+  test:
+    external: true

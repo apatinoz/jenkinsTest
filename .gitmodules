@@ -1,0 +1,8 @@
+[submodule "frontEnd"]
+	path = frontEnd
+	url = https://github.com/apatinoz/angular-clean-architecture.git
+	branch = master
+[submodule "backEnd"]
+	path = backEnd
+	url = https://github.com/apatinoz/nest-boilerplate.git
+	branch = master
